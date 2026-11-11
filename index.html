@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Tidewell Coffee · Wins & efforts</title>
+<style>
+:root{font-family:Arial,Helvetica,sans-serif;color:#242424;background:#f4f3f1;line-height:1.5}*{box-sizing:border-box}body{margin:0}header,main,footer{max-width:1120px;margin:auto;padding:24px}header{display:flex;justify-content:space-between;align-items:center;gap:16px}header strong{font-family:Georgia,serif;font-size:24px}header span,small,.muted{color:#595959;font-size:14px}h1{font-size:28px;letter-spacing:-.7px;margin:0 0 8px}h2{font-size:20px;margin:0 0 12px}p{margin:0 0 16px}main{padding-top:12px}.policy{background:#eae8e4;padding:20px;margin:24px 0}.policy p:last-child{margin:0}.layout{display:grid;grid-template-columns:1.05fr 1fr;gap:24px;align-items:start}.panel{background:white;border:1px solid #e2e0dc;border-radius:8px;padding:24px}.session{display:flex;gap:16px;align-items:center;flex-wrap:wrap;margin-bottom:20px}.clock{font-size:30px;font-variant-numeric:tabular-nums}button{font:inherit;cursor:pointer;min-height:44px;border:1px solid #b9b9b9;border-radius:6px;padding:9px 16px;background:#eee;color:#242424}button:hover{background:#dedede}button:active{transform:translateY(1px)}button.primary{background:#242424;color:white;border-color:#242424}button.primary:hover{background:#444}button:disabled{opacity:.5;cursor:default}button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:3px solid #1d5fbf;outline-offset:3px}label{display:block;font-weight:600;font-size:14px;margin:16px 0 6px}input,textarea,select{width:100%;font:inherit;color:inherit;background:white;padding:10px;border:1px solid #a9a9a9;border-radius:6px;min-height:44px}textarea{resize:vertical;min-height:90px}.preview{background:#f4f3f1;padding:16px;margin:20px 0;overflow-wrap:anywhere}.preview p{margin-bottom:0}.status{min-height:24px;margin:12px 0 0;font-size:14px;color:#194e39}.error{color:#9b2626}.record{padding:20px 0;border-top:1px solid #e7e7e7;overflow-wrap:anywhere}.record h3{font-size:16px;margin:0 0 8px}.record p{margin:8px 0}.record small{display:block}.row{display:flex;justify-content:space-between;gap:16px;align-items:center}.record button{margin-top:10px}.tag{font-size:12px;background:#eee;padding:3px 7px;border-radius:4px;white-space:nowrap}.guide{padding-left:20px;font-size:14px}.guide li{margin-bottom:6px}footer{font-size:13px;color:#595959}#count{font-variant-numeric:tabular-nums}noscript{display:block;padding:24px;background:white}@media(max-width:720px){header,main,footer{padding:18px}.layout{grid-template-columns:1fr;gap:18px}.panel{padding:18px}header{align-items:start}header span{max-width:130px;text-align:right}h1{font-size:26px}.policy{margin:18px 0}.row{align-items:start}}
+</style>
+<header><strong>Tidewell Coffee</strong><span>Shift handover<br>Fictional working prototype</span></header>
+<main>
+<h1>Wins & efforts</h1>
+<p>Make the connection: what someone did, who it helped, and why it matters.</p>
+<aside class="policy"><h2>Mutual support counts.</h2><p><strong>Proposed CEO commitment:</strong> “Mutual support belongs alongside operational results in performance conversations. Managers will bring specific examples of how they noticed and encouraged teamwork.”</p><p class="muted">Reserve the first five minutes of every handover for recognition. Review the quality of these connections, not a leaderboard of shout-outs. This is a proposed practice for Tidewell, not an enacted policy.</p></aside>
+<div class="layout">
+<section class="panel" aria-labelledby="new-title">
+<h2 id="new-title">This handover</h2>
+<div class="session"><span class="clock" id="clock" role="timer" aria-label="Five minutes remaining">5:00</span><button type="button" id="timer">Start five minutes</button><button type="button" id="reset">Reset timer</button></div>
+<ol class="guide"><li>Ask: “How did your team support each other today?”</li><li>Name a specific effort and connect it to a wider goal.</li><li>Read it aloud, invite the team's perspective, then mark it shared.</li></ol>
+<form id="recognition">
+<label for="manager">Manager name</label><input id="manager" name="manager" required maxlength="60" autocomplete="off" placeholder="e.g. Tang Li">
+<label for="employee">Employee or team</label><input id="employee" name="employee" required maxlength="80" placeholder="Who made a difference?">
+<label for="effort">What did you notice?</label><textarea id="effort" name="effort" required maxlength="400" placeholder="Describe the specific task or act of support."></textarea>
+<label for="impact">How did it help the store or team?</label><textarea id="impact" name="impact" required maxlength="400" placeholder="Name the benefit you observed. No invented numbers needed."></textarea>
+<label for="goal">Which wider Tidewell goal does it support?</label><select id="goal" name="goal" required><option value="">Choose a goal</option><option>Reliable service through teamwork</option><option>A supportive place to work</option><option>Customers who feel cared for</option><option>A confident, growing team</option></select>
+<div class="preview"><strong>Words to say aloud</strong><p id="preview">Your recognition will appear here as you write.</p></div>
+<button class="primary" type="submit">Save recognition</button>
+<p id="feedback" class="status" role="status" aria-live="polite"></p>
+</form>
+</section>
+<section class="panel" aria-labelledby="saved-title"><div class="row"><h2 id="saved-title">Handover notes</h2><span id="count" class="muted"></span></div><p class="muted">Three fictional examples are included. New notes stay in this browser. “Shared aloud” is a manager's own confirmation.</p><div id="records"></div></section>
+</div>
+<noscript>Enable JavaScript to use the timer, recognition form and local saving.</noscript>
+</main>
+<footer>Local prototype · No account or network requests · Notes are not sent to the CEO or any evaluation system. Use fictional names on shared devices.</footer>
+<script>
+'use strict';
+const $=id=>document.getElementById(id), KEY='tidewell-wins-v1';
+const samples=[
+ {id:'sample-1',manager:'Tang Li',employee:'Mei Chen',effort:'you stepped away from restocking to help a new barista sequence orders during the rush',impact:'your coworker could keep serving with confidence and the queue kept moving',goal:'Reliable service through teamwork',shared:false,sample:true,date:'Fictional morning handover'},
+ {id:'sample-2',manager:'Luo Feng',employee:'Jia Wen',effort:'you checked the closing checklist with a teammate who was unsure about the grinder clean',impact:'the next shift inherited a ready station and your teammate learned the routine',goal:'A confident, growing team',shared:true,sample:true,date:'Fictional evening handover'},
+ {id:'sample-3',manager:'Anika Rao',employee:'Sam Yu and Lin Zhao',effort:'you divided counter and drink duties when a coworker needed a short break',impact:'your colleague got support while customers continued to receive attentive service',goal:'A supportive place to work',shared:false,sample:true,date:'Fictional afternoon handover'}
+];
+let records=[],storageReady=true;
+function feedback(message,error=false){$('feedback').textContent=message;$('feedback').classList.toggle('error',error)}
+function valid(r){return r&&['id','manager','employee','effort','impact','goal','date'].every(k=>typeof r[k]==='string')&&typeof r.shared==='boolean'}
+try{const raw=localStorage.getItem(KEY);if(raw===null){records=samples.map(r=>({...r}));localStorage.setItem(KEY,JSON.stringify(records))}else{const data=JSON.parse(raw);if(!Array.isArray(data)||!data.every(valid))throw Error('Invalid notes');records=data}}catch(e){storageReady=false;records=samples.map(r=>({...r}));feedback('Saved notes could not be loaded. Examples are shown; changes will last only for this open page.',true)}
+function persist(){try{if(!storageReady)return false;localStorage.setItem(KEY,JSON.stringify(records));return true}catch(e){storageReady=false;return false}}
+function sentence(r){return `${r.employee}, I noticed ${r.effort}. This helped because ${r.impact}. That contributes to Tidewell’s goal: ${r.goal}. Thank you.`}
+const fields=['manager','employee','effort','impact','goal'];
+function values(){return Object.fromEntries(fields.map(k=>[k,$(k).value.trim()]))}
+$('recognition').addEventListener('input',()=>{const r=values();$('preview').textContent=r.employee&&r.effort&&r.impact&&r.goal?sentence(r):'Add a person, a specific effort, its impact and a wider goal to build your recognition.'});
+function element(tag,text){const el=document.createElement(tag);el.textContent=text;return el}
+function render(){const container=$('records');container.replaceChildren();$('count').textContent=`${records.length} notes · ${records.filter(r=>r.shared).length} shared`;
+ if(!records.length)container.append(element('p','No recognition saved yet. Start with one specific effort.'));
+ records.forEach(r=>{const article=element('article','');article.className='record';const row=element('div','');row.className='row';row.append(element('h3',r.employee));const tag=element('span',r.sample?'Fictional example':'Your note');tag.className='tag';row.append(tag);article.append(row,element('small',`${r.manager} · ${r.date}`),element('p',sentence(r)),element('small',`Wider goal: ${r.goal}`));
+ const button=element('button',r.shared?'Shared aloud · Undo':'Mark shared aloud');button.type='button';button.setAttribute('aria-pressed',String(r.shared));button.setAttribute('aria-label',`${r.shared?'Undo shared confirmation':'Mark shared aloud'} for ${r.employee}`);button.addEventListener('click',()=>{r.shared=!r.shared;const saved=persist();render();feedback(saved?(r.shared?'Marked as shared aloud. The connection is now part of your handover.':'Shared confirmation removed.'):'Updated for this page only. Browser storage is unavailable.',!saved)});article.append(button);container.append(article)})}
+$('recognition').addEventListener('submit',event=>{event.preventDefault();const r=values();for(const k of fields){if(!r[k]){feedback('Please complete every field with a specific example.',true);$(k).focus();return}}records.unshift({...r,id:`note-${Date.now()}-${Math.random().toString(36).slice(2)}`,shared:false,sample:false,date:new Date().toLocaleString()});const saved=persist();render();$('recognition').reset();$('preview').textContent='Your recognition will appear here as you write.';feedback(saved?'Saved on this device. Read it aloud at handover, then mark it shared.':'Added for this page only. Browser storage is unavailable; keep a copy before closing.',!saved)});
+let remaining=300,deadline=0,interval=null;
+function display(){const minutes=Math.floor(remaining/60),seconds=remaining%60;$('clock').textContent=`${minutes}:${String(seconds).padStart(2,'0')}`;$('clock').setAttribute('aria-label',`${minutes} minutes ${seconds} seconds remaining`)}
+function stop(){clearInterval(interval);interval=null}
+function tick(){remaining=Math.max(0,Math.ceil((deadline-Date.now())/1000));display();if(remaining===0){stop();$('timer').textContent='Start another five minutes';feedback('Five minutes complete. Finish listening, then share and save your recognition.')}}
+$('timer').addEventListener('click',()=>{if(interval){tick();stop();$('timer').textContent='Resume five minutes';feedback('Timer paused.')}else{if(remaining===0)remaining=300;deadline=Date.now()+remaining*1000;interval=setInterval(tick,250);$('timer').textContent='Pause timer';display();feedback('Recognition time is protected. Ask who helped whom today.')}});
+$('reset').addEventListener('click',()=>{stop();remaining=300;display();$('timer').textContent='Start five minutes';feedback('Timer reset to five minutes.')});
+render();
+</script>
+</html>
